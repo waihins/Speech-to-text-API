@@ -1,3 +1,3 @@
-# Speech-to-text-API
+# Speech-to-text Auto-captioning API
 
-NCSA SPIN
+NCSA SPIN Project
