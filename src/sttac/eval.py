@@ -1,6 +1,6 @@
 import numpy
 
-def WordErrorRate(script: str, ref: str) -> int:
+def wer_calculator(script: str, ref: str) -> int:
     """
     Take input string and reference string and calculate word error rate (WER) with Levenshtein distance.
 
@@ -45,4 +45,4 @@ def WordErrorRate(script: str, ref: str) -> int:
 if __name__ == "__main__":
     context = "this is texting input uh"
     ref = "this is a testing input"
-    print(WordErrorRate(context, ref))
+    print(wer_calculator(context, ref))
