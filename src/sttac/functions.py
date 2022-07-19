@@ -1,18 +1,18 @@
 from vosk import Model, KaldiRecognizer, SetLogLevel
+from tqdm import tqdm
 import sys
 import os
 import wave
+import json
 
 def check_model(path: str) -> None:
     if not os.path.exists(path):
-        print("Vosk Model Not Found \n \
-              Please download the Vosk model from https://alphacephei.com/vosk/models \
-              and unpack as {} in the current folder.".format(path))
+        print("\nVosk Model Not Found\n")
         exit(1)
 
 def check_src(path: str) -> None:
     if not os.path.exists(path):
-        print("Source File Not Found")
+        print("\nSource File Not Found\n")
         exit(1)
 
 def extract_text(file_path: str, model_path: str, debug: int = 0):
@@ -30,24 +30,27 @@ def extract_text(file_path: str, model_path: str, debug: int = 0):
 
     wf = wave.open(file_path, "rb")
     if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or \
-       wf.getframerate != 16000 or wf.getcomptype() != "NONE":
+       wf.getframerate() != 16000 or wf.getcomptype() != "NONE":
         print("Audio file must be mono WAV with 16kHz sample rate.")
         exit(1)
 
     model = Model(model_path)
     rec = KaldiRecognizer(model, wf.getframerate())
 
+    # set up for process bar
+    print("Starting Recognition Process...\n")
+    pbar = tqdm(total=os.path.getsize(file_path))
+
     while True:
         data = wf.readframes(4000)
         if len(data) == 0: # reach the end
             break
+        
+        pbar.update(len(data))
+        rec.AcceptWaveform(data)
 
-        if rec.AcceptWaveform(data):
-            print(rec.Result())
-        else:
-            print(rec.PartialResult())
-
-    print(rec.FinalResult())
+    final_result = json.loads(rec.FinalResult())['text']
+    print(final_result)
 
 if __name__ == "__main__":
-    extract_text("../../tests/bbc.wav", "../../model")
+    extract_text("../../tests/bbc.wav", "../../model", -1)
