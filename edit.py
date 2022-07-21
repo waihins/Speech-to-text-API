@@ -14,6 +14,9 @@ def to_wav(src: str, start: int = 0, duration: int = -1) -> None:
         src (str): Path of source audio file
         start (int): Timestamp starting to trim the audio in seconds
         duration (int): Length of the audio segment after trimming
+    
+    Return:
+        None
     """
     if not path.exists(src):
         raise FileNotFoundError("Source File Not Found")
@@ -32,6 +35,9 @@ def set_format(src: str, start: int = 0, duration: int = -1) -> None:
         src (str): Path of source audio file
         start (int): Timestamp starting to trim the audio in seconds
         duration (int): Length of the audio segment after trimming
+    
+    Return:
+        None
     """
     if not path.exists(src):
         raise FileNotFoundError("Source File Not Found")
@@ -47,5 +53,30 @@ def set_format(src: str, start: int = 0, duration: int = -1) -> None:
 
     audio.export(src, format="wav")
 
+def embed_subtitle(src: str, filename: str) -> None:
+    """
+    Embed subtitles from SRT file to video file
+
+    Parameter:
+        src (str): Name of the source SRT file 
+        filename (str): Name of the video file
+    
+    Return:
+        None
+    """
+    if not path.exists(src):
+        print("SRT File Not Found")
+        exit(1)
+    if not path.exists(filename):
+        print("Video File Not Found")
+        exit(1)
+
+    name, ext = path.splitext(filename)
+    newname = name + "-substitled" + ext
+    ffmpeg.concat(ffmpeg.input(filename)\
+    .filter("subtitles", src), ffmpeg.input(filename).audio, v=1,a=1)\
+    .output(newname).run()
+
 if __name__ == "__main__":
-    to_wav("../../tests/bbc.mov", duration=30)
+    # to_wav("tests/cs241-part8.mov")
+    embed_subtitle("tests/cs241-part8-substitled.srt", "tests/cs241-part8.mov")

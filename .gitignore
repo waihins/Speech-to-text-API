@@ -2,3 +2,5 @@
 venv/
 model/
 tests/
+checkpoint
+__pycache__/
