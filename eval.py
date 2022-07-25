@@ -38,7 +38,7 @@ def wer_calculator(script: str, ref: str) -> None:
             dp[i][j] = min(delete, insert, substitute)
 
     insertion, deletion, substitute, correct = backtrack(dp)
-    print_report(insertion, deletion, substitute, correct, len(reference))
+    print_report(insertion, deletion, substitute, correct, len(reference), dp[m][n])
 
 def backtrack(dp: list) -> list:
     """
@@ -59,23 +59,23 @@ def backtrack(dp: list) -> list:
         diag = dp[i-1][j-1]
         target = min(up, left, diag)
 
-        if target == up:
-            insertion += 1
-            i -= 1
-        elif target == diag:
+        if target == diag:
             if diag == dp[i][j]:
                 correct += 1
             else:
                 substitute += 1
             i -= 1
             j -= 1
+        elif target == up:
+            insertion += 1
+            i -= 1
         else:
             deletion += 1
             j -= 1
         
     return (insertion, deletion, substitute, correct)
 
-def print_report(insertion: int, deletion: int, substitute: int, correct: int, ref: int) -> None:
+def print_report(insertion: int, deletion: int, substitute: int, correct: int, ref: int, abs: int) -> None:
     """
     Print WER report with details
     """
@@ -87,7 +87,7 @@ def print_report(insertion: int, deletion: int, substitute: int, correct: int, r
     print("Number of Substitution: {}\n".format(substitute))
     print("Word Accuracy: {:.2f}%".format(correct / ref * 100))
     print("Word Error Rate: {:.2f}%".format((substitute + deletion + insertion) / ref * 100))
-    
+    print("Word Error Rate (Absolute): {:.2f}%".format(abs / ref * 100))
 
 if __name__ == "__main__":
     context = "hello this is podcasting house and if you've never joined us before this is a service we provide for you we put in front of you a suggestion first up all the podcast you might like to subscribe to and then if you like it you can go on over to bbc sounds if you're in the uk and"

@@ -1,0 +1,12 @@
+Ok, now let's take a look at these questions here. 
+So if you're using TCP-based protocol to transfer files.
+If the TCP packets arrive out of order, would that scrambles the contents of the file?
+And the short answer will be: no, it will not. 
+The main characteristic of TCP protocol will be it guarantees whatever the sender sends out, the receiver will receive the same exact data in the same order as they were sended it.
+So TCP achieves this by using some sequence number. 
+So whenever the sender sends out data, there will be a sequence number along with the data. 
+And whenever the receiver receives that data, it can be reorganized or reorder the data based on that sequence number in order to guarantee the order of the data they were sended.
+And whenever the arrival of the packets is out of order, the TCP sender will actually...
+There actually will be a re-transmission of the data from the sender to the receiver again in order to make sure that all the data that the receiver receives a correct and in the right order. 
+So he guarantees and the. Like to read, the receiver receives the entire data that the send er wants to send and in the same order as they were sented. 
+So yeah, the file content would not be scrambled.

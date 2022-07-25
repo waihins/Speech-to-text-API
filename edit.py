@@ -78,5 +78,5 @@ def embed_subtitle(src: str, filename: str) -> None:
     .output(newname).run()
 
 if __name__ == "__main__":
-    # to_wav("tests/cs241-part8.mov")
-    embed_subtitle("tests/cs241-part8-substitled.srt", "tests/cs241-part8.mov")
+    set_format("tests/TCP_clip.wav")
+    # embed_subtitle("tests/cs241-part8-substitled.srt", "tests/cs241-part8.mov")
