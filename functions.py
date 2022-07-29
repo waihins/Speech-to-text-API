@@ -155,7 +155,7 @@ def reformat(result: str) -> str:
 
     return results.strip()
 
-def save_file(result: str, filename: str, reformat: bool) -> None:
+def save_file(result: str, filename: str, format: bool) -> None:
     """
     Save recognition result (raw string) as a txt file
 
@@ -170,12 +170,12 @@ def save_file(result: str, filename: str, reformat: bool) -> None:
     print("Saving results to txt files...\n")
     file = open(filename, "w")
     output = result
-    if reformat:
+    if format:
         output = reformat(result)
     file.write(output)
     file.close()
 
 if __name__ == "__main__":
-    result = extract_text("tests/TCP_clip.wav", "model", -1)
+    result = extract_text("tests/bbc.wav", "model", -1)
     save_file(result, "tests/result.txt", False)
     # generate_srt('tests/cs241-part8.wav', 'model', -1)

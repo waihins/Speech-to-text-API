@@ -79,8 +79,9 @@ def print_report(insertion: int, deletion: int, substitute: int, correct: int, r
     """
     Print WER report with details
     """
-
-    print("Performace Status Report\n")
+    print("============================")
+    print("Performace Status Report")
+    print("============================\n")
     print("Total Number in Reference Text: {}".format(ref))
     print("Number of Insertion: {}".format(insertion))
     print("Number of Deletion: {}".format(deletion))
@@ -90,6 +91,6 @@ def print_report(insertion: int, deletion: int, substitute: int, correct: int, r
     print("Word Error Rate (Absolute): {:.2f}%".format(abs / ref * 100))
 
 if __name__ == "__main__":
-    context = "hello this is podcasting house and if you've never joined us before this is a service we provide for you we put in front of you a suggestion first up all the podcast you might like to subscribe to and then if you like it you can go on over to bbc sounds if you're in the uk and"
+    context = "hello his podcasting houses and if you've never joined us before this is a service we provide for you we put in front of you a suggestion first up all the podcast you might like to subscribe to and then if you like it you can go on over to bbc sounds if you're in the uk and"
     ref = "hello this is podcasting house and if you've never joined us before this is a service we provide for you we put in front of you a suggestion first up all the podcast you might like to subscribe to and then if you like it you can go on over to bbc sounds if you're in the uk and"
     wer_calculator(context, ref)
